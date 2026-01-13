@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Quicksand } from "next/font/google";
 import "./globals.css";
 import { I18nProvider } from "./i18n";
+import BackgroundBlobs from "./components/BackgroundBlobs";
 
 const quicksand = Quicksand({
   variable: "--font-quicksand",
@@ -23,7 +24,10 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${quicksand.variable} antialiased`}>
         <I18nProvider>
-          {children}
+          <div className="relative min-h-screen">
+            <BackgroundBlobs />
+            {children}
+          </div>
         </I18nProvider>
       </body>
     </html>

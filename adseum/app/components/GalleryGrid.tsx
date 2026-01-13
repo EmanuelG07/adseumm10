@@ -3,7 +3,6 @@ import React, { useMemo, useState } from "react";
 import { useI18n } from "../i18n";
 import Lightbox from "./Lightbox";
 
-// No placeholder images anymore. The gallery expects real image data from a CMS or API.
 const SAMPLE_IMAGES: { src: string; title?: string; caption?: string; year?: number }[] = [];
 
 export default function GalleryGrid({ previewCount = 8 }: { previewCount?: number }) {
@@ -16,12 +15,21 @@ export default function GalleryGrid({ previewCount = 8 }: { previewCount?: numbe
   const years = useMemo(() => {
     const s = new Set<number>();
     SAMPLE_IMAGES.forEach((img) => img.year && s.add(img.year));
-    return Array.from(s).sort((a, b) => b - a);
+    return Array.from(s).sort( (a, b) => b - a);
   }, []);
 
   const filtered = SAMPLE_IMAGES.filter((img) => {
     if (yearFilter !== "all" && img.year !== yearFilter) return false;
-    if (query && !img.title.toLowerCase().includes(query.toLowerCase()) && !img.caption.toLowerCase().includes(query.toLowerCase())) return false;
+    if (!query) return true;
+
+const q = query.toLowerCase();
+
+if (
+  !img.title?.toLowerCase().includes(q) &&
+  !img.caption?.toLowerCase().includes(q)
+) {
+  return false;
+}
     return true;
   });
 
@@ -53,16 +61,16 @@ export default function GalleryGrid({ previewCount = 8 }: { previewCount?: numbe
       {images.length === 0 ? (
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
           {Array.from({ length: placeholdersCount }).map((_, idx) => (
-            <div
-              key={idx}
-              className="relative overflow-hidden rounded-lg bg-neutral-800 border border-dashed border-neutral-700 h-56 flex items-center justify-center"
-              aria-hidden={true}
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" className="w-10 h-10 text-neutral-600">
-                <rect x="3" y="5" width="18" height="14" rx="2" ry="2" strokeWidth="1.5" />
-                <circle cx="12" cy="12" r="2.5" strokeWidth="1.5" />
-                <path d="M8 7h.01" strokeWidth="1.5" />
-              </svg>
+            <div key={idx} className="relative">
+              <div className="rounded-lg overflow-hidden bg-gradient-to-r from-transparent to-transparent p-[2px] group hover:from-red-400 hover:via-yellow-300 hover:to-purple-500 transition">
+                <div className="bg-neutral-800 border border-dashed border-neutral-700 h-56 flex items-center justify-center rounded-lg">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" className="w-10 h-10 text-neutral-600">
+                    <rect x="3" y="5" width="18" height="14" rx="2" ry="2" strokeWidth="1.5" />
+                    <circle cx="12" cy="12" r="2.5" strokeWidth="1.5" />
+                    <path d="M8 7h.01" strokeWidth="1.5" />
+                  </svg>
+                </div>
+              </div>
             </div>
           ))}
         </div>
@@ -72,11 +80,16 @@ export default function GalleryGrid({ previewCount = 8 }: { previewCount?: numbe
             <button
               key={i}
               onClick={() => setLightboxIndex(i)}
-              className="group relative overflow-hidden rounded-lg bg-neutral-800 cursor-pointer transform hover:scale-[1.02] transition"
+              className="group relative p-[2px] rounded-lg transform hover:scale-[1.02] transition"
+              aria-label={img.title || `image-${i}`}
             >
-              <img src={img.src} alt={img.title} className="w-full h-56 object-cover group-hover:brightness-90 transition" loading="lazy" />
+              <div className="bg-gradient-to-r from-transparent to-transparent group-hover:from-red-500 group-hover:via-yellow-400 group-hover:to-purple-500 rounded-lg p-[2px] transition-shadow duration-300">
+                <div className="overflow-hidden rounded-lg bg-neutral-800">
+                  <img src={img.src} alt={img.title} className="w-full h-56 object-cover transition duration-300 transform group-hover:scale-105 group-hover:brightness-90" loading="lazy" />
+                </div>
+              </div>
 
-              <div className="absolute inset-0 flex items-end">
+              <div className="absolute inset-0 flex items-end pointer-events-none">
                 <div className="w-full p-3 bg-gradient-to-t from-black/60 to-transparent text-white">
                   <div className="font-semibold">{img.title}</div>
                   <div className="text-xs mt-1 text-white/80">{img.caption}</div>
@@ -90,7 +103,7 @@ export default function GalleryGrid({ previewCount = 8 }: { previewCount?: numbe
       {lightboxIndex !== null && (
         <Lightbox
           images={images}
-          index={lightboxIndex}
+          index={lightboxIndex!}
           onClose={() => setLightboxIndex(null)}
           onPrev={() => setLightboxIndex((i) => (i === null ? null : (i - 1 + images.length) % images.length))}
           onNext={() => setLightboxIndex((i) => (i === null ? null : (i + 1) % images.length))}

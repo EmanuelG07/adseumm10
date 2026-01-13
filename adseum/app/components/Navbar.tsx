@@ -1,58 +1,38 @@
 "use client";
 import React from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import { useI18n } from "../i18n";
 
-type ScrollToFuncs = {
-  home: () => void;
-  over: () => void;
-  galerij: () => void;
-  team: () => void;
-  agenda: () => void;
-  contact: () => void;
-};
-
 interface NavbarProps {
-  active: string;
-  scrollTo: ScrollToFuncs;
+  active?: string;
 }
 
-export default function Navbar({ active, scrollTo }: NavbarProps) {
+export default function Navbar({ active }: NavbarProps) {
   const router = useRouter();
-
+  const pathname = usePathname();
 
   const { locale, setLocale, t } = useI18n();
 
   const toggleLocale = () => setLocale(locale === "nl" ? "en" : "nl");
 
-  const items = [
-    { id: "home", label: "Home", onClick: scrollTo.home },
-    { id: "over", label: "Over", onClick: scrollTo.over },
-    { id: "galerij", label: "Galerij", onClick: scrollTo.galerij },
-    { id: "team", label: "Ons team", onClick: scrollTo.team },
-    {
-      id: "agenda",
-      label: "Agenda",
-      onClick: () => {
-        try {
-          if (scrollTo && typeof (scrollTo as any).agenda === "function") {
-            (scrollTo as any).agenda();
-            return;
-          }
-        } catch (e) {
-        }
+  const navActive = active ?? (() => {
+    if (!pathname) return "home";
+    if (pathname === "/") return "home";
+    return pathname.replace("/", "");
+  })();
 
-        router.push("/agenda");
-      },
-    },
-    { id: "contact", label: "Contact", onClick: scrollTo.contact },
+  const items = [
+    { id: "home", label: "Home", path: "/" },
+    { id: "over", label: "Over", path: "/over" },
+    { id: "galerij", label: "Galerij", path: "/galerij" },
+    { id: "contact", label: "Contact", path: "/contact" },
   ];
 
   return (
     <nav className="fixed top-0 left-0 right-0 bg-black/90 backdrop-blur z-50">
       <div className="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
         <button
-          onClick={scrollTo.home}
+          onClick={() => router.push("/")}
           className="font-extrabold text-2xl md:text-3xl tracking-tight mr-6 ml-2 cursor-pointer"
           aria-label="Adseum logo"
           title="Adseum — home"
@@ -69,8 +49,8 @@ export default function Navbar({ active, scrollTo }: NavbarProps) {
           {items.map((it) => (
             <li key={it.id}>
               <button
-                onClick={it.onClick}
-                className={`px-3 py-1 rounded cursor-pointer ${active === it.id ? "bg-white text-black" : "text-white/90 hover:text-white"}`}
+                onClick={() => router.push(it.path)}
+                className={`px-3 py-1 rounded cursor-pointer ${navActive === it.id ? "bg-white text-black" : "text-white/90 hover:text-white"}`}
               >
                 {it.label}
               </button>
@@ -86,7 +66,7 @@ export default function Navbar({ active, scrollTo }: NavbarProps) {
           </div>
 
           <div className="md:hidden">
-            <button onClick={scrollTo.galerij} className="px-3 py-1 rounded bg-white text-black cursor-pointer">Galerij</button>
+            <button onClick={() => router.push("/galerij")} className="px-3 py-1 rounded bg-white text-black cursor-pointer">Galerij</button>
           </div>
         </div>
       </div>

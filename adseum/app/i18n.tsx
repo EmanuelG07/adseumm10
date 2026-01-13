@@ -1,15 +1,13 @@
 "use client";
 import React, { createContext, useContext, useEffect, useMemo, useState } from "react";
-
+    
 type Locale = "nl" | "en";
-
 const translations: Record<Locale, Record<string, string>> = {
   nl: {
     nav_home: "Home",
     nav_over: "Over",
     nav_galerij: "Galerij",
-    nav_team: "Ons team",
-    nav_agenda: "Agenda",
+    
     nav_contact: "Contact",
     hero_title: "Adseum",
     hero_sub: "Platform voor homocultuur en fotografie — tentoonstellingen, archief en community.",
@@ -23,9 +21,8 @@ const translations: Record<Locale, Record<string, string>> = {
     gallery_no_photos: "Er zijn op dit moment geen foto's beschikbaar.",
     gallery_search: "Zoek...",
     gallery_results: "Resultaten",
-    agenda_title: "Agenda",
-    agenda_sub: "Bekijk onze komende evenementen en schrijf je in.",
-    team_title: "Ons team",
+    team_title: "Team",
+    
     contact_title: "Contact",
     contact_prompt: "Vragen of samenwerking? Stuur ons een bericht.",
     contact_name: "Naam",
@@ -38,8 +35,7 @@ const translations: Record<Locale, Record<string, string>> = {
     nav_home: "Home",
     nav_over: "About",
     nav_galerij: "Gallery",
-    nav_team: "Team",
-    nav_agenda: "Events",
+    
     nav_contact: "Contact",
     hero_title: "Adseum",
     hero_sub: "Platform for queer culture and photography — exhibitions, archive and community.",
@@ -53,9 +49,8 @@ const translations: Record<Locale, Record<string, string>> = {
     gallery_no_photos: "There are currently no photos available.",
     gallery_search: "Search...",
     gallery_results: "Results",
-    agenda_title: "Events",
-    agenda_sub: "Browse our upcoming events and sign up.",
-    team_title: "Team",
+    
+    
     contact_title: "Contact",
     contact_prompt: "Questions or collaborations? Send us a message.",
     contact_name: "Name",
