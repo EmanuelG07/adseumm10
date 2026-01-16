@@ -96,7 +96,7 @@ export default function Home() {
 
             <div className="flex flex-col gap-4 text-base md:text-lg leading-relaxed text-white/90 text-left w-full">
               <p>
-                <span className="font-semibold text-white">ADseum</span> {t("hero_description")}
+                <span className="font-semibold text-white">ADseum</span> {t("hero_description_short")}
               </p>
               <p>
                 {t("hero_description_2")}
