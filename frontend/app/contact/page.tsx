@@ -12,10 +12,34 @@ export default function ContactPage() {
   const [status, setStatus] = useState<"idle" | "sending" | "success" | "error">("idle");
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
-  const submit = (e: React.FormEvent) => {
+  const submit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setStatus("error");
-    setErrorMsg(t("contact_error"));
+    setStatus("sending");
+    setErrorMsg(null);
+
+    try {
+      const response = await fetch("http://127.0.0.1:8000/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/json",
+        },
+        body: JSON.stringify({ name, email, message }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to send message");
+      }
+
+      setStatus("success");
+      setName("");
+      setEmail("");
+      setMessage("");
+    } catch (error) {
+      console.error(error);
+      setStatus("error");
+      setErrorMsg(t("contact_error"));
+    }
   };
 
   const isInvalid = !email || !message || !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email);
