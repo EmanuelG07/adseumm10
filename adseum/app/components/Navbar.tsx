@@ -64,9 +64,9 @@ export default function Navbar({ active }: NavbarProps) {
           <div className="flex items-center gap-3">
             <button
               onClick={() => setIsLoginModalOpen(true)}
-              className="px-4 py-2 rounded-lg bg-gradient-to-r from-purple-500 to-pink-500 text-white font-semibold hover:from-purple-600 hover:to-pink-600 transition-all shadow-lg hover:shadow-purple-500/50 cursor-pointer"
+              className="px-5 py-2.5 rounded-full bg-white text-black font-semibold shadow-lg shadow-black/20 hover:-translate-y-0.5 transition-all cursor-pointer"
             >
-              Inloggen
+              {t("nav_login")}
             </button>
             
             <div className="hidden md:flex items-center gap-2">
@@ -76,7 +76,7 @@ export default function Navbar({ active }: NavbarProps) {
             </div>
 
             <div className="md:hidden">
-              <button onClick={() => router.push("/galerij")} className="px-3 py-1 rounded bg-white text-black cursor-pointer">Galerij</button>
+              <button onClick={() => router.push("/galerij")} className="px-3 py-1 rounded bg-white text-black cursor-pointer">{t("nav_galerij")}</button>
             </div>
           </div>
         </div>

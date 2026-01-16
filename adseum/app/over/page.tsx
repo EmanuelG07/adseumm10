@@ -18,7 +18,7 @@ export default function OverPage() {
               ADseum
             </h1>
             <p className="text-xl text-gray-300 leading-relaxed max-w-2xl">
-              Stichting voor de bevordering en zichtbaarheid van queer kunstcultuur
+              {t("over_subtitle")}
             </p>
           </div>
         </div>
@@ -29,24 +29,19 @@ export default function OverPage() {
         <div className="max-w-5xl mx-auto px-6">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="md:col-span-2 space-y-6">
-              <h2 className="text-3xl md:text-4xl font-bold">Ons Verhaal</h2>
+              <h2 className="text-3xl md:text-4xl font-bold">{t("over_section_title")}</h2>
 
               <div className="space-y-4 text-gray-300 leading-relaxed">
                 <p>
-                  ADseum komt voort uit de stichting <span className="text-white font-semibold">"Homo webmuseum"</span>, 
-                  opgericht in 2005 door Ad Schuring en Martin van der Lugt. Gedurende twee decennia heeft Ad een dagelijks blog 
-                  onderhouden waarin alle facetten van de gay cultuur werden belicht: kunst, muziek, toneel, exposities, film, 
-                  boeken, politiek en protest.
+                  {t("over_p1")}
                 </p>
 
                 <p>
-                  Het Homo webmuseum presenteerde gay en queer kunstenaars van vroeger en nu. In 2026 openen we dit virtuele 
-                  museum opnieuw in een vernieuwde vorm.
+                  {t("over_p2")}
                 </p>
 
                 <p className="pt-2 border-l-4 border-gray-500 pl-4 italic text-gray-400">
-                  In 2024, na het overlijden van Ad Schuring, veranderde de naam in ADseum ter nagedachtenis aan onze oprichter. 
-                  Met een nieuw, fris en enthousiast bestuur zetten we zijn werk voort.
+                  {t("over_p3")}
                 </p>
               </div>
             </div>
@@ -63,48 +58,47 @@ export default function OverPage() {
       {/* Mission Section */}
       <section className="py-20 bg-neutral-950 border-t border-neutral-800">
         <div className="max-w-5xl mx-auto px-6">
-          <h2 className="text-3xl md:text-4xl font-bold mb-12">Wat We Doen</h2>
+          <h2 className="text-3xl md:text-4xl font-bold mb-12">{t("over_section_2_title")}</h2>
 
           <div className="space-y-6">
             <p className="text-gray-300 text-lg leading-relaxed max-w-3xl">
-              Ons doel: het bevorderen van queer cultuur door het stimuleren, ondersteunen en zichtbaar maken van 
-              erotische kunst, beeldende kunst en de gay/queer cultuur in al haar uitingsvormen.
+              {t("over_mission")}
             </p>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-8">
               <div className="bg-neutral-900 border border-neutral-800 rounded-lg p-6 hover:border-gray-600 transition">
                 <h3 className="font-bold text-white mb-3 flex items-center gap-2">
-                  <span className="text-lg"></span> Cultuurbevordering
+                  <span className="text-lg"></span> {t("over_feature_1_title")}
                 </h3>
                 <p className="text-gray-300 text-sm">
-                  Organiseren en ondersteunen van festivals, tentoonstellingen, lezingen en andere culturele manifestaties.
+                  {t("over_feature_1_desc")}
                 </p>
               </div>
 
               <div className="bg-neutral-900 border border-neutral-800 rounded-lg p-6 hover:border-gray-600 transition">
                 <h3 className="font-bold text-white mb-3 flex items-center gap-2">
-                  <span className="text-lg"></span> Uitgeverij
+                  <span className="text-lg"></span> {t("over_feature_2_title")}
                 </h3>
                 <p className="text-gray-300 text-sm">
-                  Het uitgeven van boeken en publicaties op papier en middels andere communicatieve uitingen.
+                  {t("over_feature_2_desc")}
                 </p>
               </div>
 
               <div className="bg-neutral-900 border border-neutral-800 rounded-lg p-6 hover:border-gray-600 transition">
                 <h3 className="font-bold text-white mb-3 flex items-center gap-2">
-                  <span className="text-lg"></span> Samenwerking
+                  <span className="text-lg"></span> {t("over_feature_3_title")}
                 </h3>
                 <p className="text-gray-300 text-sm">
-                  Partnerschap met organisaties en instellingen die vergelijkbare doelen nastreven.
+                  {t("over_feature_3_desc")}
                 </p>
               </div>
 
               <div className="bg-neutral-900 border border-neutral-800 rounded-lg p-6 hover:border-gray-600 transition">
                 <h3 className="font-bold text-white mb-3 flex items-center gap-2">
-                  <span className="text-lg"></span> Erfenis
+                  <span className="text-lg"></span> Heritage
                 </h3>
                 <p className="text-gray-300 text-sm">
-                  Beheer en presentatie van artistieke nalatenschappen van homo-kunstenaars.
+                  Management and presentation of artistic legacies of queer artists.
                 </p>
               </div>
             </div>
@@ -115,7 +109,7 @@ export default function OverPage() {
       {/* Partners Section */}
       <section className="py-20">
         <div className="max-w-5xl mx-auto px-6">
-          <h2 className="text-3xl md:text-4xl font-bold mb-12">Nauwe Banden Met</h2>
+          <h2 className="text-3xl md:text-4xl font-bold mb-12">Close Connections With</h2>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="border-l-4 border-gray-600 pl-6 py-4">
@@ -128,7 +122,7 @@ export default function OverPage() {
             <div className="border-l-4 border-gray-600 pl-6 py-4">
               <h3 className="font-bold text-lg text-white mb-2">Tom of Finland Foundation — LA</h3>
               <p className="text-gray-400 text-sm">
-                Regelmatig aanwezig op TOF Art Fair
+                Regularly present at TOF Art Fair
               </p>
             </div>
           </div>

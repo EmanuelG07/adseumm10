@@ -5,12 +5,26 @@ import { useI18n } from "./i18n";
 
 export default function Home() {
   const { t } = useI18n();
-  const phrases = [
-    "Kunst. Erfgoed. Vrijheid.",
-    "Vrijheid. Kunst. Erfgoed.",
-    "Erfgoed. Vrijheid. Kunst.",
-  ];
+  const [phrases, setPhrases] = useState<string[]>([
+    t("hero_tagline_1"),
+    t("hero_tagline_2"),
+    t("hero_tagline_3"),
+  ]);
+
+  useEffect(() => {
+    setPhrases([
+      t("hero_tagline_1"),
+      t("hero_tagline_2"),
+      t("hero_tagline_3"),
+    ]);
+  }, [t]);
+
   const phrasesRef = useRef(phrases);
+
+  useEffect(() => {
+    phrasesRef.current = phrases;
+  }, [phrases]);
+
   const [typedTagline, setTypedTagline] = useState<string | null>(null);
 
   useEffect(() => {
@@ -82,17 +96,17 @@ export default function Home() {
 
             <div className="flex flex-col gap-4 text-base md:text-lg leading-relaxed text-white/90 text-left w-full">
               <p>
-                <span className="font-semibold text-white">ADseum</span> is een non-profit stichting die zich inzet voor het behoud en de zichtbaarheid van gay- en queer kunst en cultuur. De stichting komt voort uit het Homo Webmuseum, opgericht in 2005 door Ad Schuring. Ter nagedachtenis aan hem werd in 2024 de naam ADseum.
+                <span className="font-semibold text-white">ADseum</span> {t("hero_description")}
               </p>
               <p>
-                Met een nieuw bestuur werkt ADseum aan de heropening van een virtueel museum en ondersteunt zij kunstenaars, nalatenschappen en culturele initiatieven. De stichting organiseert en ondersteunt tentoonstellingen, publicaties en samenwerkingen met nationale en internationale partners.
+                {t("hero_description_2")}
               </p>
             </div>
 
             <div className="flex flex-wrap justify-center gap-3 text-xs md:text-sm uppercase tracking-[0.18em] text-white/80">
-              <div className="px-4 py-2 rounded-full bg-gradient-to-r from-amber-400/70 via-orange-500/70 to-amber-500/70 border border-white/15 shadow-lg shadow-amber-500/25">Virtueel Museum</div>
-              <div className="px-4 py-2 rounded-full bg-gradient-to-r from-rose-400/70 via-red-500/70 to-pink-500/70 border border-white/15 shadow-lg shadow-rose-500/25">Tentoonstellingen</div>
-              <div className="px-4 py-2 rounded-full bg-gradient-to-r from-emerald-400/70 via-teal-500/70 to-cyan-500/70 border border-white/15 shadow-lg shadow-emerald-500/25">Samenwerkingen</div>
+              <div className="px-4 py-2 rounded-full bg-gradient-to-r from-amber-400/70 via-orange-500/70 to-amber-500/70 border border-white/15 shadow-lg shadow-amber-500/25">{t("hero_badge_1")}</div>
+              <div className="px-4 py-2 rounded-full bg-gradient-to-r from-rose-400/70 via-red-500/70 to-pink-500/70 border border-white/15 shadow-lg shadow-rose-500/25">{t("hero_badge_2")}</div>
+              <div className="px-4 py-2 rounded-full bg-gradient-to-r from-emerald-400/70 via-teal-500/70 to-cyan-500/70 border border-white/15 shadow-lg shadow-emerald-500/25">{t("hero_badge_3")}</div>
             </div>
           </div>
 
