@@ -3,37 +3,64 @@ import React, { useMemo, useState } from "react";
 import { useI18n } from "../i18n";
 import Lightbox from "./Lightbox";
 
+// Fallback voorbeelddata (mag leeg blijven)
 const SAMPLE_IMAGES: { src: string; title?: string; caption?: string; year?: number }[] = [];
 
-export default function GalleryGrid({ previewCount = 8 }: { previewCount?: number }) {
+export type GalleryItem = {
+  src: string; // URL van de afbeelding
+  title?: string;
+  caption?: string;
+  year?: number;
+};
+
+export default function GalleryGrid({
+  previewCount = 8, // Hoeveel foto's laten we zien (standaard 8)
+  items = [], // De lijst met foto's die we doorkrijgen van de pagina
+}: {
+  previewCount?: number;
+  items?: GalleryItem[];
+}) {
+  // Zoekterm en filter staat
   const [query, setQuery] = useState("");
   const [yearFilter, setYearFilter] = useState<number | "all">("all");
+  // Welke foto is er nu groot open (in de lightbox)? Null = geen.
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
 
   const { t } = useI18n();
 
+  // Gebruik de items als bron, anders de (lege) voorbeelddata
+  const source = items.length > 0 ? items : SAMPLE_IMAGES;
+
+  // Bereken unieke jaren uit de lijst met foto's voor het filter
   const years = useMemo(() => {
     const s = new Set<number>();
-    SAMPLE_IMAGES.forEach((img) => img.year && s.add(img.year));
-    return Array.from(s).sort( (a, b) => b - a);
-  }, []);
+    source.forEach((img) => img.year && s.add(img.year));
+    return Array.from(s).sort((a, b) => b - a); // Sorteer nieuw naar oud
+  }, [source]);
 
-  const filtered = SAMPLE_IMAGES.filter((img) => {
+  // Hier filter ik de foto's op basis van zoekterm en jaartal
+  const filtered = source.filter((img) => {
+    // Check jaartal
     if (yearFilter !== "all" && img.year !== yearFilter) return false;
+
+    // Als er geen zoekterm is, laat alles zien
     if (!query) return true;
 
-const q = query.toLowerCase();
+    const q = query.toLowerCase();
 
-if (
-  !img.title?.toLowerCase().includes(q) &&
-  !img.caption?.toLowerCase().includes(q)
-) {
-  return false;
-}
-    return true;
+    // Check of de titel of tekst de zoekterm bevat
+    if (
+      !img.title?.toLowerCase().includes(q) &&
+      !img.caption?.toLowerCase().includes(q)
+    ) {
+      return false; // Niet gevonden
+    }
+    return true; // Wel gevonden
   });
 
-  const images = (previewCount && previewCount > 0) ? filtered.slice(0, previewCount) : filtered;
+  const images =
+    previewCount && previewCount > 0 ? filtered.slice(0, previewCount) : filtered;
+
   const placeholdersCount = previewCount && previewCount > 0 ? previewCount : 12;
 
   return (
@@ -47,15 +74,25 @@ if (
             className="px-3 py-2 rounded bg-neutral-900 text-white border border-gray-700"
           />
 
-          <select value={yearFilter} onChange={(e) => setYearFilter(e.target.value === "all" ? "all" : Number(e.target.value))} className="px-3 py-2 rounded bg-neutral-900 text-white border border-gray-700">
+          <select
+            value={yearFilter}
+            onChange={(e) =>
+              setYearFilter(e.target.value === "all" ? "all" : Number(e.target.value))
+            }
+            className="px-3 py-2 rounded bg-neutral-900 text-white border border-gray-700"
+          >
             <option value="all">Alle jaren</option>
             {years.map((y) => (
-              <option key={y} value={y}>{y}</option>
+              <option key={y} value={y}>
+                {y}
+              </option>
             ))}
           </select>
         </div>
 
-        <div className="text-sm text-gray-400">{t("gallery_results")}: {filtered.length}</div>
+        <div className="text-sm text-gray-400">
+          {t("gallery_results")}: {filtered.length}
+        </div>
       </div>
 
       {images.length === 0 ? (
@@ -64,7 +101,13 @@ if (
             <div key={idx} className="relative">
               <div className="rounded-lg overflow-hidden bg-gradient-to-r from-transparent to-transparent p-[2px] group hover:from-red-400 hover:via-yellow-300 hover:to-purple-500 transition">
                 <div className="bg-neutral-800 border border-dashed border-neutral-700 h-56 flex items-center justify-center rounded-lg">
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" className="w-10 h-10 text-neutral-600">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    className="w-10 h-10 text-neutral-600"
+                  >
                     <rect x="3" y="5" width="18" height="14" rx="2" ry="2" strokeWidth="1.5" />
                     <circle cx="12" cy="12" r="2.5" strokeWidth="1.5" />
                     <path d="M8 7h.01" strokeWidth="1.5" />
@@ -79,16 +122,23 @@ if (
           {images.map((img, i) => (
             <button
               key={i}
-              onClick={() => setLightboxIndex(i)}
+              onClick={() => setLightboxIndex(i)} // Klikken opent de lightbox
               className="group relative p-[2px] rounded-lg transform hover:scale-[1.02] transition"
               aria-label={img.title || `image-${i}`}
             >
+              {/* De kleurrijke rand die oplicht bij hoveren */}
               <div className="bg-gradient-to-r from-transparent to-transparent group-hover:from-red-500 group-hover:via-yellow-400 group-hover:to-purple-500 rounded-lg p-[2px] transition-shadow duration-300">
                 <div className="overflow-hidden rounded-lg bg-neutral-800">
-                  <img src={img.src} alt={img.title} className="w-full h-56 object-cover transition duration-300 transform group-hover:scale-105 group-hover:brightness-90" loading="lazy" />
+                  <img
+                    src={img.src}
+                    alt={img.title || "Foto"}
+                    className="w-full h-56 object-cover transition duration-300 transform group-hover:scale-105 group-hover:brightness-90"
+                    loading="lazy"
+                  />
                 </div>
               </div>
 
+              {/* Titel en tekst over de foto heen */}
               <div className="absolute inset-0 flex items-end pointer-events-none">
                 <div className="w-full p-3 bg-gradient-to-t from-black/60 to-transparent text-white">
                   <div className="font-semibold">{img.title}</div>
@@ -103,10 +153,18 @@ if (
       {lightboxIndex !== null && (
         <Lightbox
           images={images}
-          index={lightboxIndex!}
+          index={lightboxIndex}
           onClose={() => setLightboxIndex(null)}
-          onPrev={() => setLightboxIndex((i) => (i === null ? null : (i - 1 + images.length) % images.length))}
-          onNext={() => setLightboxIndex((i) => (i === null ? null : (i + 1) % images.length))}
+          onPrev={() =>
+            setLightboxIndex((i) =>
+              i === null ? null : (i - 1 + images.length) % images.length
+            )
+          }
+          onNext={() =>
+            setLightboxIndex((i) =>
+              i === null ? null : (i + 1) % images.length
+            )
+          }
         />
       )}
     </div>

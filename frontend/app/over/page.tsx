@@ -3,6 +3,7 @@ import React from "react";
 import Navbar from "../components/Navbar";
 import { useI18n } from "../i18n";
 
+// De 'Over Mij' pagina. Bevat tekst en uitleg over de missie.
 export default function OverPage() {
   const { t } = useI18n();
 
@@ -10,7 +11,7 @@ export default function OverPage() {
     <main className="min-h-screen bg-black text-white">
       <Navbar />
 
-      {/* Hero Section */}
+      {/* Hero Section: De grote titel en subtitel bovenaan */}
       <section className="py-16 md:py-24 border-b border-neutral-800">
         <div className="max-w-5xl mx-auto px-6">
           <div className="space-y-4">
@@ -24,7 +25,7 @@ export default function OverPage() {
         </div>
       </section>
 
-      {/* Origin Section */}
+      {/* Origin Section: Het verhaal van het ontstaan */}
       <section className="py-20">
         <div className="max-w-5xl mx-auto px-6">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -46,6 +47,7 @@ export default function OverPage() {
               </div>
             </div>
 
+            {/* Plek voor een foto of portret */}
             <div className="flex items-center justify-center">
               <div className="w-full h-80 bg-gradient-to-br from-neutral-800 to-neutral-900 rounded-lg border border-neutral-700 flex items-center justify-center text-gray-400 hover:border-gray-600 transition">
                 Afbeelding / Portret
@@ -55,7 +57,7 @@ export default function OverPage() {
         </div>
       </section>
 
-      {/* Mission Section */}
+      {/* Mission Section: Wat we doen (missie en pijlers) */}
       <section className="py-20 bg-neutral-950 border-t border-neutral-800">
         <div className="max-w-5xl mx-auto px-6">
           <h2 className="text-3xl md:text-4xl font-bold mb-12">{t("over_section_2_title")}</h2>
@@ -106,7 +108,7 @@ export default function OverPage() {
         </div>
       </section>
 
-      {/* Partners Section */}
+      {/* Partners Section: Samenwerkingen */}
       <section className="py-20">
         <div className="max-w-5xl mx-auto px-6">
           <h2 className="text-3xl md:text-4xl font-bold mb-12">Close Connections With</h2>

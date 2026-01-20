@@ -9,15 +9,18 @@ interface LightboxProps {
   onNext: () => void;
 }
 
+// De popup die verschijnt als je op een foto klikt
 export default function Lightbox({ images, index, onClose, onPrev, onNext }: LightboxProps) {
+  // Luister naar toetsenbord aanslagen (Escape, Pijltje Links, Pijltje Rechts)
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
-      if (e.key === "Escape") onClose();
-      if (e.key === "ArrowLeft") onPrev();
-      if (e.key === "ArrowRight") onNext();
+      if (e.key === "Escape") onClose(); // Sluit bij ESC
+      if (e.key === "ArrowLeft") onPrev(); // Vorige foto
+      if (e.key === "ArrowRight") onNext(); // Volgende foto
     };
 
     window.addEventListener("keydown", handler);
+    // Opruimen als de lightbox sluit
     return () => window.removeEventListener("keydown", handler);
   }, [onClose, onPrev, onNext]);
 

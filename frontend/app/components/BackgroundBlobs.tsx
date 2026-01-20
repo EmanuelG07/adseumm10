@@ -4,8 +4,10 @@ import { usePathname } from "next/navigation";
 
 export default function BackgroundBlobs() {
   const pathname = usePathname();
+  // Check of we op de homepagina zijn (dan zijn de blobs feller)
   const isHome = pathname === "/" || pathname === "" || pathname === undefined;
 
+  // De definitie van alle gekleurde bollen (kleur, grootte, positie, snelheid)
   const blobs = [
     { color: "rgba(255,0,102,0.95)", size: "50vmax", top: "-10%", left: "-20%", duration: "22s", delay: "0s" }, // Red / pink
     { color: "rgba(255,94,0,0.95)", size: "44vmax", top: "5%", left: "55%", duration: "24s", delay: "-3s" }, // Orange

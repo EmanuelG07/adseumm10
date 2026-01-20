@@ -21,4 +21,17 @@ class ContactMessageController extends Controller
             'data' => $contactMessage
         ], 201);
     }
+    // Admin: Toon alle berichten
+    public function adminIndex()
+    {
+        $messages = \App\Models\ContactMessage::latest()->get();
+        return view('admin.messages', compact('messages'));
+    }
+
+    // Admin: Verwijder bericht
+    public function adminDestroy(\App\Models\ContactMessage $message)
+    {
+        $message->delete();
+        return redirect()->back()->with('success', 'Bericht verwijderd.');
+    }
 }

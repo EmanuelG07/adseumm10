@@ -1,7 +1,8 @@
 "use client";
 import React, { createContext, useContext, useEffect, useMemo, useState } from "react";
-    
+
 type Locale = "nl" | "en";
+// Hier staan alle vertalingen. 'nl' voor Nederlands, 'en' voor Engels.
 const translations: Record<Locale, Record<string, string>> = {
   nl: {
     nav_home: "Home",
@@ -42,7 +43,7 @@ const translations: Record<Locale, Record<string, string>> = {
     gallery_search: "Zoek...",
     gallery_results: "Resultaten",
     team_title: "Team",
-    
+
     contact_title: "Contact",
     contact_prompt: "Vragen of samenwerking? Stuur ons een bericht.",
     contact_description: "Bereik het team voor samenwerkingen, pers, of creatieve ideeën. We reageren snel en helpen je graag verder.",
@@ -100,7 +101,7 @@ const translations: Record<Locale, Record<string, string>> = {
     gallery_search: "Search...",
     gallery_results: "Results",
     team_title: "Team",
-    
+
     contact_title: "Contact",
     contact_prompt: "Questions or collaboration? Send us a message.",
     contact_description: "Reach out to the team for collaborations, press inquiries, or creative ideas. We respond quickly and are happy to help.",
@@ -127,20 +128,24 @@ const I18nContext = createContext<{
   t: (key: string) => string;
 } | null>(null);
 
+// De Provider component die om de hele app heen zit (zie layout.tsx)
 export function I18nProvider({ children }: { children: React.ReactNode }) {
+  // Probeer de taalinstelling uit de browser (localStorage) te halen, anders standaard 'nl'
   const [locale, setLocale] = useState<Locale>((typeof window !== "undefined" && (localStorage.getItem("adseum-locale") as Locale)) || "nl");
 
   useEffect(() => {
     try {
       const saved = localStorage.getItem("adseum-locale") as Locale | null;
       if (saved) setLocale(saved);
-    } catch (e) {}
+    } catch (e) { }
   }, []);
 
+  // Als de taal verandert, sla dit op in de browser voor de volgende keer
   useEffect(() => {
-    try { localStorage.setItem("adseum-locale", locale); } catch (e) {}
+    try { localStorage.setItem("adseum-locale", locale); } catch (e) { }
   }, [locale]);
 
+  // De functie 't' zoekt de juiste tekst op bij de sleutel (key)
   const t = (key: string) => {
     return translations[locale][key] ?? translations["nl"][key] ?? key;
   };
