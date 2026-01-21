@@ -3,6 +3,7 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
 import Navbar from "./components/Navbar";
+import Image from "next/image";
 import { useI18n } from "./i18n";
 
 export default function Home() {
@@ -107,9 +108,17 @@ export default function Home() {
           <div className="absolute -inset-12 bg-gradient-to-tr from-pink-500/10 via-purple-500/10 to-cyan-400/10 blur-3xl -z-10" />
 
           {/* De grote hoofdtitel */}
-          <h1 className="text-5xl md:text-6xl font-extrabold text-white drop-shadow-md">
-            {t("hero_title")}
-          </h1>
+          <div className="flex justify-center mb-4">
+            <div className="relative w-80 h-32 md:w-[500px] md:h-[158px]">
+              <Image
+                src="/img/logo3.png"
+                alt="ADseum"
+                fill
+                className="object-contain"
+                priority
+              />
+            </div>
+          </div>
 
           {/* De tekst die automatisch typt en verandert */}
           <p

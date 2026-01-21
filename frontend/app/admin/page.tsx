@@ -13,7 +13,7 @@ export default function AdminLoginPage() {
         setIsLoading(true);
 
         // Voor nu sturen we de gebruiker direct door naar de Laravel backend login route.
-        // In de toekomst kunnen we hier een API call maken als we dat liever hebben.
+        // In de toekomst kan ik hier een API call maken als we dat liever hebben.
         // De 'timeout' is puur voor het visuele effect, zodat de gebruiker ziet dat er iets gebeurt.
         setTimeout(() => {
             window.location.href = "http://127.0.0.1:8000/login";

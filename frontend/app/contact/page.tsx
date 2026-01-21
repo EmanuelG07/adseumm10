@@ -48,7 +48,7 @@ export default function ContactPage() {
     <main className="min-h-screen bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950 text-white">
       <Navbar />
 
-      <section className="py-16 min-h-[calc(100vh-6rem)] flex items-center justify-center">
+      <section className="py-32 min-h-screen flex items-center justify-center">
         <div className="max-w-5xl xl:max-w-6xl mx-auto px-6 w-full grid grid-cols-1 lg:grid-cols-[1.05fr_0.95fr] gap-8 place-items-center lg:place-items-stretch">
           <div className="space-y-6 w-full">
             <div className="inline-flex items-center gap-2 rounded-full bg-white/5 border border-white/10 px-3 py-1 text-xs uppercase tracking-[0.2em] text-white/70">
@@ -129,15 +129,13 @@ export default function ContactPage() {
               </div>
 
               <div className="space-y-2 text-sm">
-                {isInvalid && <div className="text-amber-300">{t("contact_validation_error")}</div>}
+                {/* Text removed as requested */}
                 {status === "success" && <div className="text-emerald-300">{t("contact_success")}</div>}
                 {status === "error" && <div className="text-rose-300">{t("contact_error_prefix")}{errorMsg}</div>}
               </div>
             </form>
 
-            <div className="pt-2 text-xs text-white/60">
-              {t("contact_local_note")}
-            </div>
+
           </div>
         </div>
       </section>

@@ -1,6 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import { useRouter, usePathname } from "next/navigation";
+import Image from "next/image";
 import { useI18n } from "../i18n";
 
 interface NavbarProps {
@@ -36,16 +37,19 @@ export default function Navbar({ active }: NavbarProps) {
       <div className="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
         <button
           onClick={() => router.push("/")}
-          className="font-extrabold text-2xl md:text-3xl tracking-tight mr-6 ml-2 cursor-pointer"
+          className="mr-6 ml-2 cursor-pointer"
           aria-label="Adseum logo"
           title="Adseum — home"
         >
-          <span className="inline-block text-red-500">A</span>
-          <span className="inline-block text-orange-400">d</span>
-          <span className="inline-block text-yellow-400">s</span>
-          <span className="inline-block text-green-400">e</span>
-          <span className="inline-block text-blue-500">u</span>
-          <span className="inline-block text-purple-500">m</span>
+          <div className="relative w-32 h-10 md:w-40 md:h-12">
+            <Image
+              src="/img/witteadseumlogo.png"
+              alt="Adseum - Empowering Queer Art"
+              fill
+              className="object-contain scale-110 md:scale-125 origin-left"
+              priority
+            />
+          </div>
         </button>
 
         <ul className="hidden md:flex gap-4">

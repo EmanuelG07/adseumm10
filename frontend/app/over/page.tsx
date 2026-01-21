@@ -1,6 +1,7 @@
 "use client";
 import React from "react";
 import Navbar from "../components/Navbar";
+import Image from "next/image";
 import { useI18n } from "../i18n";
 
 // De 'Over Mij' pagina. Bevat tekst en uitleg over de missie.
@@ -49,8 +50,13 @@ export default function OverPage() {
 
             {/* Plek voor een foto of portret */}
             <div className="flex items-center justify-center">
-              <div className="w-full h-80 bg-gradient-to-br from-neutral-800 to-neutral-900 rounded-lg border border-neutral-700 flex items-center justify-center text-gray-400 hover:border-gray-600 transition">
-                Afbeelding / Portret
+              <div className="w-full h-80 relative">
+                <Image
+                  src="/img/logo3.png"
+                  alt="ADseum Logo"
+                  fill
+                  className="object-contain"
+                />
               </div>
             </div>
           </div>
